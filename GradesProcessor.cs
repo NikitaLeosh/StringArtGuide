@@ -32,33 +32,35 @@ namespace WindowsFormsApp2.ImageProcessing
             }
             return grades;
         }
-        public void SaveGrades(List<Bitmap> Grades)
+        public void SaveGrades()
         {
             GradesSaver(_grades);
         }
-        public void DivideGrades(Pixel pixel, int color, int Acolor)
+        public void DivideGrades(Pixel pixel, int color)//, int Acolor)
         {
-            GradesDividerBlack(pixel, color, Acolor);
+            GradesDividerBlack(pixel, color);//, Acolor);
         }
 
-        private static void GradesDivider(Pixel pixel, int color, int Acolor)
-        {
-            currentGrade = color / 25;
-            if (currentGrade < 0)
-                currentGrade++;
-            if (currentGrade >= NumberOfGrades)
-                currentGrade = NumberOfGrades-1;
-            _grades[currentGrade].SetPixel(pixel.point.X, pixel.point.Y, Color.FromArgb(Acolor, color, color, color));
+        //private static void GradesDivider(Pixel pixel, int color, int Acolor)
+        //{
+        //    currentGrade = color / 25;
+        //    if (currentGrade < 0)
+        //        currentGrade++;
+        //    if (currentGrade >= NumberOfGrades)
+        //        currentGrade = NumberOfGrades-1;
+        //    _grades[currentGrade].SetPixel(pixel.point.X, pixel.point.Y, Color.FromArgb(Acolor, color, color, color));
 
-        }
-        private static void GradesDividerBlack(Pixel pixel, int color, int Acolor)
+        //}
+
+        // Third argument for this method is commented out to be able to change it back to various grades divider.
+        private static void GradesDividerBlack(Pixel pixel, int color)//, int Acolor)
         {
             currentGrade = color / 25;
             if (currentGrade < 0)
                 currentGrade++;
             if (currentGrade >= NumberOfGrades)
                 currentGrade = NumberOfGrades - 1;
-            _grades[currentGrade].SetPixel(pixel.point.X, pixel.point.Y, Color.Black);
+            _grades[currentGrade].SetPixel(pixel.point.X, pixel.point.Y, Color.Green);
 
         }
         private static void GradesSaver(List<Bitmap> Grades)
