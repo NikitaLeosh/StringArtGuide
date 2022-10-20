@@ -13,6 +13,7 @@ namespace WindowsFormsApp2.ImageProcessing
     {
         private const int NumberOfGrades = 10;
         private static List<Bitmap> _grades;
+        private static int currentGrade;
         public GradesProcessor(Bitmap _image)
         {
             _grades = SetList(_image);
@@ -38,26 +39,12 @@ namespace WindowsFormsApp2.ImageProcessing
 
         private static void GradesDivider(Pixel pixel, int color, int Acolor)
         {
-            if (color >= 0 && color < 25)
-                _grades[0].SetPixel(pixel.point.X, pixel.point.Y, Color.FromArgb(Acolor, color, color, color));
-            else if (color >= 25 && color < 50)
-                _grades[1].SetPixel(pixel.point.X, pixel.point.Y, Color.FromArgb(Acolor, color, color, color));
-            else if (color >= 50 && color < 75)
-                _grades[2].SetPixel(pixel.point.X, pixel.point.Y, Color.FromArgb(Acolor, color, color, color));
-            else if (color >= 75 && color < 100)
-                _grades[3].SetPixel(pixel.point.X, pixel.point.Y, Color.FromArgb(Acolor, color, color, color));
-            else if (color >= 100 && color < 125)
-                _grades[4].SetPixel(pixel.point.X, pixel.point.Y, Color.FromArgb(Acolor, color, color, color));
-            else if (color >= 125 && color < 150)
-                _grades[5].SetPixel(pixel.point.X, pixel.point.Y, Color.FromArgb(Acolor, color, color, color));
-            else if (color >= 150 && color < 175)
-                _grades[6].SetPixel(pixel.point.X, pixel.point.Y, Color.FromArgb(Acolor, color, color, color));
-            else if (color >= 175 && color < 200)
-                _grades[7].SetPixel(pixel.point.X, pixel.point.Y, Color.FromArgb(Acolor, color, color, color));
-            else if (color >= 200 && color < 225)
-                _grades[8].SetPixel(pixel.point.X, pixel.point.Y, Color.FromArgb(Acolor, color, color, color));
-            else
-                _grades[9].SetPixel(pixel.point.X, pixel.point.Y, Color.FromArgb(Acolor, color, color, color));
+            currentGrade = color / 25;
+            if (currentGrade < 0)
+                currentGrade++;
+            if (currentGrade >= NumberOfGrades)
+                currentGrade = NumberOfGrades-1;
+            _grades[currentGrade].SetPixel(pixel.point.X, pixel.point.Y, Color.FromArgb(Acolor, color, color, color));
 
         }
         private static void GradesSaver(List<Bitmap> Grades)
