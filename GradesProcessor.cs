@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.ExceptionServices;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace WindowsFormsApp2.ImageProcessing
 {
@@ -24,17 +25,20 @@ namespace WindowsFormsApp2.ImageProcessing
 
             for (int i=0; i < NumberOfGrades; i++)
             {
-                grades.Add(new Bitmap(image.Width, image.Height));
+                Bitmap bitmap = new Bitmap(image.Width, image.Height);
+                
+
+                grades.Add(bitmap);
             }
             return grades;
         }
         public void SaveGrades(List<Bitmap> Grades)
         {
-            GradesSaver(Grades);
+            GradesSaver(_grades);
         }
         public void DivideGrades(Pixel pixel, int color, int Acolor)
         {
-            GradesDivider(pixel, color, Acolor);
+            GradesDividerBlack(pixel, color, Acolor);
         }
 
         private static void GradesDivider(Pixel pixel, int color, int Acolor)
@@ -45,6 +49,16 @@ namespace WindowsFormsApp2.ImageProcessing
             if (currentGrade >= NumberOfGrades)
                 currentGrade = NumberOfGrades-1;
             _grades[currentGrade].SetPixel(pixel.point.X, pixel.point.Y, Color.FromArgb(Acolor, color, color, color));
+
+        }
+        private static void GradesDividerBlack(Pixel pixel, int color, int Acolor)
+        {
+            currentGrade = color / 25;
+            if (currentGrade < 0)
+                currentGrade++;
+            if (currentGrade >= NumberOfGrades)
+                currentGrade = NumberOfGrades - 1;
+            _grades[currentGrade].SetPixel(pixel.point.X, pixel.point.Y, Color.Black);
 
         }
         private static void GradesSaver(List<Bitmap> Grades)
